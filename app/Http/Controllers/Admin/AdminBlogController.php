@@ -17,7 +17,7 @@ class AdminBlogController extends Controller
 	 */
 	public function index()
 	{
-		$blogs = Blog::all();
+		$blogs = Blog::latest('updated_at')->simplePaginate(10);
 		return view('admin.blogs.index', ['blogs' => $blogs]);
 	}
 
@@ -56,9 +56,8 @@ class AdminBlogController extends Controller
 	/**
 	 * 指定したIDのブログ編集画面
 	 */
-	public function edit(string $id)
+	public function edit(Blog $blog)
 	{
-		$blog = Blog::findOrFail($id);
 		return view('admin.blogs.edit', ['blog' => $blog]);
 	}
 
